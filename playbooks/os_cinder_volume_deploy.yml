@@ -21,8 +21,9 @@
           mode: "0755"
       - name: Create Cron job
         cron:
+          name: "Run cinder_volume_bouncer.sh every minute"
           minute: "0/1"
-          job: "bash /root/cinder-volume-bouncer.sh >> /var/log/cinder-volume-bounce.log 2>&1"
+          job: "bash /root/cinder_volume_bouncer.sh >> /var/log/cinder_volume_bounce.log 2>&1"
     
   - name: Clean up after ourselves
     hosts: localhost
