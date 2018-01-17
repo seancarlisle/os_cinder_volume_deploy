@@ -6,7 +6,7 @@
     - name: Git latest copy of cinder-volume-bouncer bash script
       git:
         clone: yes
-        dest: /tmp/
+        dest: /tmp/cinder_volume_bouncer
         repo: "https://github.com/seancarlisle/cinder_volume_bouncer.git"
 
   - name: Copy script to infra host
