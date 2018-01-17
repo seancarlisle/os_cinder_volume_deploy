@@ -1,27 +1,32 @@
 # Simple playbook to deploy cinder-volume-bouncer
 
-  tasks:
+  - name: Git latest copy of cinder-volume-bouncer bash script
+    hosts: localhost
+    tasks:
     - name: Git latest copy of cinder-volume-bouncer bash script
-      hosts: localhost
       git:
         clone: yes
         dest: /tmp/
         repo: "https://github.com/seancarlisle/cinder_volume_bouncer.git"
-    - name: Copy script to infra host
-      hosts: os-infra_hosts[0]
-      copy:
-        src: "/tmp/cinder_volume_bouncer/cinder-volume-bouncer.sh"
-        dest: "/root/cinder-volume-bouncer.sh"
-        owner: "root"
-        group: "root"
-        mode: "0755"
-    - name: Create Cron job
-      hosts: os-infra_hosts[0]
-      cron:
-        minute: "0/1"
-        job: "bash /root/cinder-volume-bouncer.sh >> /var/log/cinder-volume-bounce.log 2>&1"
-    - name: Clean up after ourselves
-      hosts: localhost
+
+  - name: Copy script to infra host
+    hosts: os-infra_hosts[0]
+    tasks:  
+      - name: Copy script to infra host
+        copy:
+          src: "/tmp/cinder_volume_bouncer/cinder-volume-bouncer.sh"
+          dest: "/root/cinder-volume-bouncer.sh"
+          owner: "root"
+          group: "root"
+          mode: "0755"
+      - name: Create Cron job
+        cron:
+          minute: "0/1"
+          job: "bash /root/cinder-volume-bouncer.sh >> /var/log/cinder-volume-bounce.log 2>&1"
+    
+  - name: Clean up after ourselves
+    hosts: localhost
+    tasks:  
       file:
         path: "/tmp/cinder_volume_bouncer"
         state: absent
