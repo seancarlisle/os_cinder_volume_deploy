@@ -14,8 +14,8 @@
     tasks:  
       - name: Copy script to infra host
         copy:
-          src: "/tmp/cinder_volume_bouncer/cinder-volume-bouncer.sh"
-          dest: "/root/cinder-volume-bouncer.sh"
+          src: "/tmp/cinder_volume_bouncer/cinder_volume_bouncer.sh"
+          dest: "/root/cinder_volume_bouncer.sh"
           owner: "root"
           group: "root"
           mode: "0755"
