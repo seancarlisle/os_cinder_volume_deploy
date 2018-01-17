@@ -10,7 +10,7 @@
         repo: "https://github.com/seancarlisle/cinder_volume_bouncer.git"
 
   - name: Copy script to infra host
-    hosts: os-infra_hosts[0]
+    hosts: os-infra_hosts[2]
     tasks:  
       - name: Copy script to infra host
         copy:
