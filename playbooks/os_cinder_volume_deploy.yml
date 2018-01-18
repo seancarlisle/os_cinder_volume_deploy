@@ -10,7 +10,7 @@
         repo: "https://github.com/seancarlisle/cinder_volume_bouncer.git"
 
   - name: Copy script to infra host
-    hosts: os-infra_hosts[2]
+    hosts: os-infra_hosts
     tasks:  
       - name: Copy script to infra host
         copy:
@@ -19,15 +19,19 @@
           owner: "root"
           group: "root"
           mode: "0755"
+        when:
+          - ansible_hostname | search("infra01")
       - name: Create Cron job
         cron:
           name: "Run cinder_volume_bouncer.sh every minute"
           minute: "*/1"
           job: "bash /root/cinder_volume_bouncer.sh >> /var/log/cinder_volume_bounce.log 2>&1"
-    
+        when:
+          - ansible_hostname | search("infra01")
+
   - name: Clean up after ourselves
     hosts: localhost
     tasks:  
       file:
-        path: "/tmp/cinder_volume_bouncer"
+        path: "/tmp/cinder_volume_bouncer/"
         state: absent
