@@ -32,6 +32,7 @@
   - name: Clean up after ourselves
     hosts: localhost
     tasks:  
+    - name: Clean up after ourselves
       file:
         path: "/tmp/cinder_volume_bouncer/"
         state: absent
